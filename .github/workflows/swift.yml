@@ -9,21 +9,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    # - uses: YOCKOW/Action-setup-swift@master
-    #   with:
-    #     swift-version: '5.1.2'
-    # - name: Build
-    #   run: swift build -c release
-    # - name: Test Binary
-    #   run: ./.build/release/EditXCProject
+    - uses: YOCKOW/Action-setup-swift@master
+      with:
+        swift-version: '5.1.2'
+    - name: Build
+      run: swift build -c release
+    - name: Test Binary
+      run: ./.build/release/EditXCProject
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
         version: '271.0.0'
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
-    - run: gsutil help
-    # - name: Upload artifact
-    #   uses: actions/upload-artifact@v1.0.0
-    #   with:
-    #     name: EditXCProject
-    #     path: .build/release/EditXCProject
+    - run: |
+        gsutil cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
+        gsutil acl ch -u AllUsers:R gs://edit-xc-project-binary/EditXCProject
+        echo https://storage.googleapis.com/edit-xc-project-binary/EditXCProject
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: EditXCProject
+        path: .build/release/EditXCProject
