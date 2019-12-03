@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "XcodeEdit",
+        "repositoryURL": "git@github.com:tomlokhorst/XcodeEdit.git",
+        "state": {
+          "branch": null,
+          "revision": "70e4f0e3ad5f5de5360ed865e7b7e32a7a042f83",
+          "version": "2.7.4"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
