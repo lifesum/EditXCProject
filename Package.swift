@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "EditXCProject",
     dependencies: [
-        .package(url: "git@github.com:tomlokhorst/XcodeEdit.git", .exact("2.7.4"))
+        .package(url: "https://github.com/tomlokhorst/XcodeEdit.git", .exact("2.7.4"))
     ],
     targets: [
         .target(
