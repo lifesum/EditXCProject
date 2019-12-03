@@ -1,6 +1,9 @@
 name: Swift
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   build:
@@ -26,12 +29,3 @@ jobs:
         gsutil cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
         gsutil acl ch -u AllUsers:R gs://edit-xc-project-binary/EditXCProject
         echo https://storage.googleapis.com/edit-xc-project-binary/EditXCProject
-
-        curl -L -k -o EditXCProject https://storage.googleapis.com/edit-xc-project-binary/EditXCProject
-        chmod +x EditXCProject
-        ./EditXCProject
-    - name: Upload artifact
-      uses: actions/upload-artifact@v1.0.0
-      with:
-        name: EditXCProject
-        path: .build/release/EditXCProject
