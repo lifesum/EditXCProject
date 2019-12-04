@@ -12,23 +12,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    # - uses: YOCKOW/Action-setup-swift@master
-    #   with:
-    #     swift-version: '5.1.2'
 
     - name: Build
       run: swift build -c release
     - name: Test Binary
       run: ./.build/release/EditXCProject
-    - uses: actions-hub/gcloud@master
-      env:
-        PROJECT_ID: api-project-744929802849
-        APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
-        CLI: gsutil
+
+    - name: GitHub Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        args: cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
-    # - name: Upload Binary to Google Cloud Storage
-    #   run: |
-    #     gsutil cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
-    #     gsutil acl ch -u AllUsers:R gs://edit-xc-project-binary/EditXCProject
-    #     echo https://storage.googleapis.com/edit-xc-project-binary/EditXCProject
+        files: |
+          .build/release/EditXCProject
