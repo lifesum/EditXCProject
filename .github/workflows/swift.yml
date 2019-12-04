@@ -26,7 +26,7 @@ jobs:
       run: ./.build/release/EditXCProject
     - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
       with:
-        version: '272.0.0'
+        version: '271.0.0'
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
     - name: Upload Binary to Google Cloud Storage
