@@ -16,25 +16,19 @@ jobs:
     #   with:
     #     swift-version: '5.1.2'
 
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.5.x'
-
-    - uses: actions/setup-node@v1
-      with:
-        node-version: '10.x'
-
     - name: Build
       run: swift build -c release
     - name: Test Binary
       run: ./.build/release/EditXCProject
-    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+    - uses: actions-hub/gcloud@master
+      env:
+        PROJECT_ID: api-project-744929802849
+        APPLICATION_CREDENTIALS: ${{ secrets.GCP_SA_KEY }}
+        CLI: gsutil
       with:
-        version: '271.0.0'
-        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-    - name: Upload Binary to Google Cloud Storage
-      run: |
-        gsutil cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
-        gsutil acl ch -u AllUsers:R gs://edit-xc-project-binary/EditXCProject
-        echo https://storage.googleapis.com/edit-xc-project-binary/EditXCProject
+        args: cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
+    # - name: Upload Binary to Google Cloud Storage
+    #   run: |
+    #     gsutil cp .build/release/EditXCProject gs://edit-xc-project-binary/EditXCProject
+    #     gsutil acl ch -u AllUsers:R gs://edit-xc-project-binary/EditXCProject
+    #     echo https://storage.googleapis.com/edit-xc-project-binary/EditXCProject
